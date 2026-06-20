@@ -7,7 +7,11 @@ from fastmcp import FastMCP
 
 mcp = FastMCP("Python Memory Server")
 
-MEMORY_DIR = os.path.join(os.getcwd(), "memory")
+BASE_DIR = os.environ.get(
+    "MEMORY_DIR",
+    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "memory")
+)
+MEMORY_DIR = BASE_DIR
 DB_PATH = os.path.join(MEMORY_DIR, "memories.db")
 INDEX_PATH = os.path.join(MEMORY_DIR, "MEMORY.md")
 

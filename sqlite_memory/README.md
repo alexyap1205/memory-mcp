@@ -32,6 +32,14 @@ At the start of a session, the agent reads the `memory://index` resource to see 
 uv sync
 ```
 
+## Configuration
+
+By default, memory files are stored in `memory/` at the repo root (resolved relative to `server.py`, not the working directory). Override with the `MEMORY_DIR` environment variable:
+
+```bash
+MEMORY_DIR=/custom/path uv run python sqlite_memory/server.py
+```
+
 ## MCP Configuration
 
 Add to your Claude Code MCP config (`~/.claude/claude_desktop_config.json` or `.claude/settings.json`):
@@ -53,7 +61,27 @@ Add to your Claude Code MCP config (`~/.claude/claude_desktop_config.json` or `.
 }
 ```
 
-Replace `/path/to/memory-mcp` with the absolute path to this repo.
+Replace `/path/to/memory-mcp` with the absolute path to this repo. To use a custom memory directory, add an `"env"` key:
+
+```json
+{
+  "mcpServers": {
+    "memory": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/path/to/memory-mcp",
+        "run",
+        "python",
+        "sqlite_memory/server.py"
+      ],
+      "env": {
+        "MEMORY_DIR": "/custom/path/to/memory"
+      }
+    }
+  }
+}
+```
 
 ## Example usage
 
